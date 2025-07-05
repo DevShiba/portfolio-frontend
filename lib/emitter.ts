@@ -1,24 +1,8 @@
-class EventEmitter {
-  private events: { [key: string]: Function[] } = {};
+import mitt from "mitt";
 
-  on(event: string, callback: Function) {
-    if (!this.events[event]) {
-      this.events[event] = [];
-    }
-    this.events[event].push(callback);
-  }
+type Events = {
+  "shader:running": void;
+  "loader:end": void;
+};
 
-  emit(event: string, ...args: any[]) {
-    if (this.events[event]) {
-      this.events[event].forEach((callback) => callback(...args));
-    }
-  }
-
-  off(event: string, callback: Function) {
-    if (this.events[event]) {
-      this.events[event] = this.events[event].filter((cb) => cb !== callback);
-    }
-  }
-}
-
-export const emitter = new EventEmitter();
+export const emitter = mitt<Events>();
