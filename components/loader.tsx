@@ -1,10 +1,11 @@
 import React, { useRef, useEffect } from "react";
 import { useGsap } from "../hooks/use-gsap";
-import { emitter } from "../lib/emitter";
+import { useEmitter } from "hooks/use-emitter";
 
 function Loader(): React.ReactElement {
   const loaderRef = useRef<HTMLDivElement>(null);
   const { gsap } = useGsap();
+  const emitter = useEmitter();
 
   useEffect(() => {
     const handleShaderRunning = () => {

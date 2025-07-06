@@ -1,5 +1,5 @@
 attribute vec3 position;
-attribute vec3 uv;
+attribute vec2 uv;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
@@ -7,7 +7,7 @@ uniform mat4 modelViewMatrix;
 varying vec2 vUv;
 varying vec3 vPosition;
 
-void main(){
+void main() {
   vUv = uv;
   vPosition = position;
 

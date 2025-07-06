@@ -22,32 +22,28 @@ float lines(vec2 uv, float offset) {
   );
 }
 
-vec3 normalizeRGBColor(vec3 color){
+vec3 normalizeRGBColor(vec3 color) {
   return color / 255.0;
 }
 
-mat2 getRotationMatrix(float angle){
+mat2 getRotationMatrix(float angle) {
   return mat2(
     cos(angle), -sin(angle),
     sin(angle), cos(angle)
   );
 }
 
-void main(){
-  float shaderZoom = 0.0
+void main() {
+  float shaderZoom = 0.0;
 
-  if(resolution.x > 700.0) shaderZoom = 0.25;
+  if (resolution.x > 700.0) shaderZoom = 0.25;
   else shaderZoom = 0.4;
 
-  vec3 _color1 = normalizeRGBColor(color1);
-  vec3 _color2 = normalizeRGBColor(color2);
-  vec3 _color3 = normalizeRGBColor(color3);
+  vec3 _color1 = color1;
+  vec3 _color2 = color2;
+  vec3 _color3 = color3;
 
-  flaot noise = snoise(
-    vPosition +
-    time * 0.175 +
-    randomSeed * 100.0
-  ) * (noisePower * 0.55);
+  float noise = snoise(vPosition + time * 0.175 + randomSeed * 100.0) * (noisePower * 0.55);
 
   vec2 baseUv = getRotationMatrix(noise + -1.0) * vPosition.xy * shaderZoom;
 
@@ -55,15 +51,14 @@ void main(){
   float secondPattern = lines(baseUv, 0.05);
 
   vec3 firstColor = mix(_color3, _color2, firstPattern);
-
   vec3 resultingPattern = mix(firstColor, _color1, secondPattern);
 
   float grainStrength = 0.075;
-  if(pixelRation > 1.8) grainStrength = 0.125;
+  if (pixelRatio > 1.8) grainStrength = 0.125;
 
   vec2 uvNoise = vPosition.xy;
-  uvNoise.y * rand(vec2(uvNoise.y, randomSeed));
-  vec3 grain = vec(rand(uvNoise) * grainStrength);
+  uvNoise.y *= rand(vec2(uvNoise.y, randomSeed));
+  vec3 grain = vec3(rand(uvNoise) * grainStrength);
 
   resultingPattern += grain;
 
