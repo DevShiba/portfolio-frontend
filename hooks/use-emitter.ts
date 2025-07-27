@@ -5,6 +5,12 @@ type Events = {
   "shader:running": void;
   "loader:end": void;
   "pointer:inactive": void;
+  "pointer:eye:active": void;
+  "pointer:eye:inactive": void;
+  "pointer:link:active": void;
+  "pointer:link:inactive": void;
+  "pointer:text:active": void;
+  "pointer:text:inactive": void;
   "overlay:hiding": void;
   "images:loaded": void;
 };
